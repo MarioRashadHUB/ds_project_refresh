@@ -1,3 +1,3 @@
-# ds_project_refresh
+# 2022 Data Science Refresher Project
 
 ## Resources
