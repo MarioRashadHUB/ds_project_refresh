@@ -33,6 +33,8 @@ df = df.astype({'fixed_min_salary':'int', 'max_salary':'int'})
 
 df['avg_salary'] = (df.fixed_min_salary+df.max_salary)/2
 
+# test from linux PC
+
 # company name text only
 # state field
 # age of company
