@@ -30,15 +30,16 @@ min_hr = minus_Kd.apply(lambda x: x.lower().replace('per hour','').replace('empl
 
 df['min_salary'] = min_hr.apply(lambda x: (x.split('-')[0]))
 df['max_salary'] = min_hr.apply(lambda x: (x.split('-')[1]))
-
 df['fixed_min_salary'] = df['min_salary'].apply(lambda x: x.replace(':', ''))
-
 df = df.astype({'fixed_min_salary':'int', 'max_salary':'int'})
-
 df['avg_salary'] = (df.fixed_min_salary+df.max_salary)/2
 
 # company name text only
+<<<<<<< HEAD
 df['company_name'] = df.apply(lambda x: x['Company Name'] if x['Rating'] < 0 else x['Company Name'][:-3], axis = 1)
+=======
+df['company_txt'] = df.apply(lambda x: x['Company Name'] if x['Rating'] < 0 else x['Company Name'][:-3], axis=1)
+>>>>>>> 939e6b316a8634e8abf11116236355fd4ded8dc4
 
 # state field
 df['job_state'] = df['Location'].apply(lambda x: x.split(',')[0])
