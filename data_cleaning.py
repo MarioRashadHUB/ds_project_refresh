@@ -7,6 +7,10 @@ Created on Fri Apr  8 10:29:02 2022
 
 import pandas as pd
 
+pd.options.display.max_rows
+pd.set_option('display.max_rows', None)
+
+
 df = pd.read_csv('2022_ds_glassdoor_jobs.csv')
 
 # company name text only
@@ -34,6 +38,26 @@ df = df.astype({'fixed_min_salary':'int', 'max_salary':'int'})
 df['avg_salary'] = (df.fixed_min_salary+df.max_salary)/2
 
 # company name text only
+df['company_name'] = df.apply(lambda x: x['Company Name'] if x['Rating'] < 0 else x['Company Name'][:-3], axis = 1)
+
 # state field
+df['job_state'] = df['Location'].apply(lambda x: x.split(',')[0])
+print(df.job_state.value_counts())
+
+df['same_state'] = df.apply(lambda x: 1 if x.Location == x.Headquarters else 0, axis = 1)
+
 # age of company
+df['age'] = df.Founded.apply(lambda x: x if x < 1 else 2020 - x)
+
 # parsing of job description (python, ect)
+df['python_yn'] = df['Job Description'].apply(lambda x: 'yes' if 'python' in x.lower() else 'no')
+df['excel_yn'] = df['Job Description'].apply(lambda x: 'yes' if 'excel' in x.lower() else 'no')
+df['R_yn'] = df['Job Description'].apply(lambda x: 'yes' if 'r studio' in x.lower() or 'r-studio' in x.lower() else 'no')
+df['aws_yn'] = df['Job Description'].apply(lambda x: 'yes' if 'aws' in x.lower() else 'no')
+df['spark_yn'] = df['Job Description'].apply(lambda x: 'yes' if 'spark' in x.lower() else 'no')
+
+df_out = df.drop('Unnamed: 0', axis = 1)
+
+df_out.to_csv('salary_data_cleaned.csv', index = False)
+
+print(pd.read_csv('salary_data_cleaned.csv'))
