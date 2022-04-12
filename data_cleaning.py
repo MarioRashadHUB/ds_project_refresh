@@ -26,7 +26,7 @@ df = df[df['Salary Estimate'] != '-1' ]
 salary = df['Salary Estimate'].apply(lambda x: x.split('(')[0])
 minus_Kd = salary.apply(lambda x: x.replace('K', '').replace('$',''))
 
-min_hr = minus_Kd.apply(lambda x: x.lower().replace('per hour','').replace('employer provided salary',''))
+min_hr = minus_Kd.apply(lambda x: x.lower().replace('per hour','').replace('employer provided salary:',''))
 
 df['min_salary'] = min_hr.apply(lambda x: (x.split('-')[0]))
 df['max_salary'] = min_hr.apply(lambda x: (x.split('-')[1]))
@@ -57,8 +57,9 @@ df['spark_yn'] = df['Job Description'].apply(lambda x: 'yes' if 'spark' in x.low
 
 df_out = df.drop('Unnamed: 0', axis = 1)
 
-''' TO AVOID NEW CSV BEING CREATED EVERYTIME THIS SCRIPT IS RAN
- df_out.to_csv('salary_data_cleaned.csv', index = False)
+'''
+TO AVOID NEW CSV BEING CREATED EVERYTIME THIS SCRIPT IS RAN
+df_out.to_csv('salary_data_cleaned.csv', index = False)
 '''
 
 print(pd.read_csv('salary_data_cleaned.csv'))
