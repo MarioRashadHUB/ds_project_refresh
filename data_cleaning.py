@@ -35,14 +35,12 @@ df = df.astype({'fixed_min_salary':'int', 'max_salary':'int'})
 df['avg_salary'] = (df.fixed_min_salary+df.max_salary)/2
 
 # company name text only
-<<<<<<< HEAD
 df['company_name'] = df.apply(lambda x: x['Company Name'] if x['Rating'] < 0 else x['Company Name'][:-3], axis = 1)
-=======
+
 df['company_txt'] = df.apply(lambda x: x['Company Name'] if x['Rating'] < 0 else x['Company Name'][:-3], axis=1)
->>>>>>> 939e6b316a8634e8abf11116236355fd4ded8dc4
 
 # state field
-df['job_state'] = df['Location'].apply(lambda x: x.split(',')[0])
+df['job_state'] = df['Location'].apply(lambda x: x.split(',')[1])
 print(df.job_state.value_counts())
 
 df['same_state'] = df.apply(lambda x: 1 if x.Location == x.Headquarters else 0, axis = 1)
